@@ -44,21 +44,18 @@ contract AssessmentContract {
     }
     function deposit() public payable {
         require(msg.value > 0, "Must send some ether");
-
         balances[msg.sender] += msg.value;
         emit Deposit(msg.sender, msg.value);
     }
     function withdraw(uint _amount) public {
         require(_amount > 0, "Must withdraw some ether");
         require(balances[msg.sender] >= _amount, "Not enough balance");
-
         balances[msg.sender] -= _amount;
         payable(msg.sender).transfer(_amount);
         emit Withdrawal(msg.sender, _amount);
     }
     function transferOwnership(address newOwner) public onlyOwner {
         require(newOwner != address(0), "New owner cannot be zero address");
-
         owner = newOwner;
     }
     function restrictedAction() public view onlyOwner {
